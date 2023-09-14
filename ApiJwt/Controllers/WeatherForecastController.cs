@@ -1,10 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiJwt.Controllers;
 
-[ApiController]
-[Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+
+public class WeatherForecastController : ApiBaseController
 {
     private static readonly string[] Summaries = new[]
     {
@@ -16,11 +16,13 @@ public class WeatherForecastController : ControllerBase
     public WeatherForecastController(ILogger<WeatherForecastController> logger)
     {
         _logger = logger;
+        _logger.LogInformation("Cordial saludo desde el pronosticador del clima");
     }
-
-    [HttpGet(Name = "GetWeatherForecast")]
+    [HttpGet]
+    //[Authorize(Roles = "Employee")]
     public IEnumerable<WeatherForecast> Get()
     {
+        //throw new Exception("Excepcion no controlada");
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

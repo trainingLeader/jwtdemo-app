@@ -1,9 +1,7 @@
 using Application.Repository;
 using Domain.Interfaces;
 using Persistence;
-
 namespace Application.UnitOfWork;
-
 public class UnitOfWork : IUnitOfWork, IDisposable
 {
     private readonly JwtAppContext _context;

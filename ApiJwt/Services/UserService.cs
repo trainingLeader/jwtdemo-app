@@ -114,7 +114,6 @@ public class UserService : IUserService
 
         var user = await _unitOfWork.Users
                     .GetByUsernameAsync(model.Username);
-
         if (user == null)
         {
             return $"User {model.Username} does not exists.";
@@ -176,7 +175,7 @@ public class UserService : IUserService
         usuario.RefreshTokens.Add(newRefreshToken);
         _unitOfWork.Users.Update(usuario);
         await _unitOfWork.SaveAsync();
-        //Generate a new Json Web Token 😊
+        //Generate a new Json Web Token
         dataUserDto.IsAuthenticated = true;
         JwtSecurityToken jwtSecurityToken = CreateJwtToken(usuario);
         dataUserDto.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
