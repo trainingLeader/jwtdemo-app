@@ -19,7 +19,7 @@ public class WeatherForecastController : ApiBaseController
         _logger.LogInformation("Cordial saludo desde el pronosticador del clima");
     }
     [HttpGet]
-    //[Authorize(Roles = "Employee")]
+    [Authorize(Roles = "Employee")]
     public IEnumerable<WeatherForecast> Get()
     {
         //throw new Exception("Excepcion no controlada");

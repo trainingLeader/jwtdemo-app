@@ -1,3 +1,4 @@
+using System.Reflection;
 using ApiJwt.Extension;
 using ApiJwt.Helpers;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 builder.Services.ConfigureCors();
 builder.Services.AddAplicacionServices();
 builder.Services.AddJwt(builder.Configuration);
@@ -31,6 +33,8 @@ builder.Services.AddDbContext<JwtAppContext>(options =>
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseStatusCodePagesWithReExecute("/errors/{0}");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -45,6 +49,7 @@ using (var scope = app.Services.CreateScope())
 	{
 		var context = services.GetRequiredService<JwtAppContext>();
 		await context.Database.MigrateAsync();
+		await JwtAppContextSeed.SeedAsync(context,loggerFactory);
 	}
 	catch (Exception ex)
 	{

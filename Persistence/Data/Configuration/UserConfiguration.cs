@@ -17,8 +17,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 builder.Property(p => p.Username)
                 .HasColumnName("username")
                 .HasColumnType("varchar")
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
 
 
                 builder.Property(p => p.Password)
@@ -42,7 +41,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                    .HasOne(pt => pt.Rol)
                    .WithMany(t => t.UsersRols)
                    .HasForeignKey(ut => ut.RolId),
-
 
                    j => j
                    .HasOne(et => et.Usuario)
